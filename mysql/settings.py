@@ -123,9 +123,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR
 STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    BASE_DIR / 'staticfiles',
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
