@@ -5,15 +5,24 @@ import datetime
 # Create your views here.
 # function based view:
 def home(request):
-    #http reponse simply sends back HTML -- very basic
-    return HttpResponse('<a href="/quote/">quote</a><br><a href="/html/dt">DateTime</a><br><a href="/html/">Greeting</a><br>')
+    # http reponse simply sends back HTML -- very basic
+    # return HttpResponse('<a href="/quote/">quote</a><br><a href="/html/dt">DateTime</a><br><a href="/html/">Greeting</a><br>')
+    context = {
+        'html': '<a href="/quote/">quote</a><br><a href="/html/dt">DateTime</a><br><a href="/html/">Greeting</a><br>'
+    }
+    return render(request,'base.html', context)
 
 def display(request):
-    return HttpResponse("<h1>This is MySQL_HTML Application</h1>")
+    context = {
+        'html': '<h1>This is MySQL_HTML Application</h1>'
+    }
+    return render(request,'base.html', context)
 
 def displayDateTime(request):
     dt=datetime.datetime.now()
-    #string
+    #s = string
     s='<b>Curent Date and Time: </b>' + str(dt)
-    #the object HttpResponse is necessary to wrap whatever response is going back from the server to the browser
-    return HttpResponse(s)
+    context = {
+        'html': s
+    }
+    return render(request,'base.html', context)

@@ -15,18 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-# the "as" helps us differentiate which views from where
-# from mysql_html.views import views as html_views
 
-# We can designate this same thing as:
-from mysql_html.views import display, displayDateTime, home
-from mysql_quote.views import displayQuote
+# need to get the ability to import sub-application urls
+from django.conf.urls import include
 
 urlpatterns = [
     path('nvaadmin/', admin.site.urls),
-    path('', home),
-    path('html/', display),
-    path('html/dt', displayDateTime),
-    path('quote/', displayQuote),
+    path('',include('mysql_html.urls')),
+    path('',include('mysql_quote.urls')),    
 ]
 
