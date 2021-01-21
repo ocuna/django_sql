@@ -10,9 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-# stuff for heroku
-import django_heroku
-from decouple import Config
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Import Secret Keys
-SECRET_KEY = Config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',   
     'django_extensions',
     'werkzeug',
-    'import_export',
-    'rest_framework',
+    'whitenoise',
+    'decouple',
+    # stuff I've Made:
+    'mysql_html',
+    'mysql_quote',
 ]
 
 MIDDLEWARE = [
