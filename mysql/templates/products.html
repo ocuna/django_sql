@@ -4,12 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1>{{ heading }}</h1>
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
         </div>
-        <div class="col-12">
-            <div>{{ product_1 }}</div>
-            <div>{{ product_2 }}</div>
-            <div>{{ product_3 }}</div>
+        <div class="col-12 d-flex flex-row">
+            <div class="d-flex flex-column m-2 text-center">
+                <div><h4>{{ product_d.product1 }}</h4></div><div><img src="{% static 'img/' %}{{ product_d.image1 }}"/></div>
+            </div>
+            <div class="d-flex flex-column m-2 text-center">
+                <div><h4>{{ product_d.product2 }}</h4></div><div><img src="{% static 'img/' %}{{ product_d.image2 }}"/></div>
+            </div>
+            <div class="d-flex flex-column m-2 text-center">
+                <div><h4>{{ product_d.product3 }}</h4></div><div><img src="{% static 'img/' %}{{ product_d.image3 }}"/></div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-"""mysql URL Configuration
+"""mysql_hr URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -16,13 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-# need to get the ability to import sub-application urls
-from django.conf.urls import include
-
 urlpatterns = [
-    path('nvaadmin/', admin.site.urls),
-    path('',include('mysql_html.urls')),
-    path('',include('mysql_quote.urls')),  
-    path('',include('mysql_products.urls')),    
+    path('admin/', admin.site.urls),
 ]
-
