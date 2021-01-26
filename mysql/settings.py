@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     # stuff I've Made:
     'mysql_html',
     'mysql_quote',
+    'mysql_products',
+    'mysql_hr',
 ]
 
 MIDDLEWARE = [
@@ -84,10 +86,23 @@ WSGI_APPLICATION = 'mysql.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    #original SQLite DB
+    
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #}
+
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'python',
+        'USER': 'django',
+        'PASSWORD': 'TJudge.410',
+        'HOST': '127.0.0.1',
+        'PORT': 33067,
     }
+
 }
 
 

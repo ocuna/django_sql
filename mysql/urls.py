@@ -23,6 +23,7 @@ urlpatterns = [
     path('nvaadmin/', admin.site.urls),
     path('',include('mysql_html.urls')),
     path('',include('mysql_quote.urls')),  
-    path('',include('mysql_products.urls')),    
+    path('',include('mysql_products.urls')),
+    path('',include('mysql_hr.urls')),
 ]
 

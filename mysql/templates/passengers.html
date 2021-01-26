@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    {%  if successString  %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success" role="alert">
+                {{ successString }}
+              </div>
+        </div>        
+    </div>
+    {%  endif  %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
+        </div>
+        {% if passengers %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill fw-bold">name, email</div>
+                    <div class="flex-shrink-1 fw-bold">points</div>
+                </div>
+            </div>
+        {% for passenger in passengers %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill">{{ passenger.first }}&nbsp;{{ passenger.last }} <a href="mailto: {{ passenger.email }}">{{ passenger.email }}</a></div>
+                    <div class="flex-shrink-1">{{ passenger.points|floatformat:"0" }}</div>
+                    <div class="flex-shrink-1"><a class="btn btn-warning mx-1 p-0 btn-sm" href="/hr/passenger/update/{{ passenger.id }}">update</a></div>
+                    <div class="flex-shrink-1"><a class="btn btn-danger mx-1  p-0 btn-sm" href="/hr/passenger/delete/{{ passenger.id }}">delete</a></div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <!-- {{ POST }} -->
+    {%  if successString  %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success" role="alert">
+                {{ successString }}
+              </div>
+        </div>        
+    </div>
+    {%  endif  %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="d-flex flex-row bg-light px-5">
+                <form method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <input class="btn btn-primary" type='submit' name='' value="Register" >
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

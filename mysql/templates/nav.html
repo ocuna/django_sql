@@ -14,14 +14,23 @@
                 Products
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a href="/products/shoes">Shoes</a></li>
-                <li><a href="/products/toys">Toys</a></li>
-                <li><a href="/products/electronics">Electronics</a></li>
+                <li><a class="dropdown-item" href="/products/shoes">Shoes</a></li>
+                <li><a class="dropdown-item" href="/products/toys">Toys</a></li>
+                <li><a class="dropdown-item" href="/products/electronics">Electronics</a></li>
             </ul>
             </li>
-            <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    HR
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="/hr/passengers" tabindex="-1" aria-disabled="true">Lis Passengers</a></li>
+                    <li><a class="dropdown-item" href="/hr/passengerRegistration" tabindex="-1" aria-disabled="true">Registration</a></li>
+                    <li><a class="dropdown-item" href="/hr/modelPassengerRegistration" tabindex="-1" aria-disabled="true">Model Based Registration</li>
+                    <li><a class="dropdown-item" href="/hr/passengerLogin" tabindex="-1" aria-disabled="true">Login</a></li>
+                </ul>
             </li>
+
         </ul>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

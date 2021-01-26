@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load hr_filters %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
+        </div>
+        {% if employees %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill fw-bold">name, email</div>
+                    <div class="flex-shrink-1 fw-bold">salary</div>
+                </div>
+            </div>
+        {% for employee in employees %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill">{{ employee.firstName }}&nbsp;{{ employee.lastName }} <a href="mailto: {{ employee.email }}">{{ employee.email }}</a></div>
+                    <div class="flex-shrink-1">$&nbsp;{{ employee.salary|currency }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
