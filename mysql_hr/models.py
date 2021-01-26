@@ -1,4 +1,5 @@
 from django.db import models
+from django.core import validators
 
 # Create your models here.
 
@@ -14,10 +15,10 @@ class Employee(models.Model):
 
 
 class Passenger(models.Model):
-    first=models.CharField(max_length=30, default='')
-    last=models.CharField(max_length=30, default='')
+    first=models.CharField(max_length=30, default='', validators=[validators.MinLengthValidator(2, 'must be 2 characters or more.')])
+    last=models.CharField(max_length=30, default='', validators=[validators.MinLengthValidator(2, 'must be 2 characters or more.')])
     email=models.CharField(max_length=254, default='')
-    password = models.CharField(max_length=30, default='')
+    password = models.CharField(max_length=30, default='', validators=[validators.RegexValidator('^(?=.{8,}$)(?=.*[A-Z]).*$', 'Password must be at least 8 characters with 1 being a Capital Letter.')])
     gender = models.CharField(max_length=30, default='')
     ssn = models.IntegerField(default=0)
     points=models.FloatField(default=0)

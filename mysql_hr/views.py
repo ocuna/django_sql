@@ -56,7 +56,7 @@ def modelPassengerRegistration(request):
             form.save()
             return redirect('/hr/passengers')
     else :
-        form = forms.modelPassengerRegistration
+        form = forms.modelPassengerRegistration(request.POST)
 
     context = {
         'heading':"Model-Based Passenger Registration",

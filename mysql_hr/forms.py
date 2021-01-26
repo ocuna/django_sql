@@ -1,7 +1,6 @@
 from django.forms import ModelForm, Select, Form, CharField, IntegerField, ValidationError, EmailInput, PasswordInput
 from mysql_hr.models import Passenger
 from django.core import validators
-from django.core.validators import RegexValidator
 import re
 
 # inheriting the "modelForm" class into this custom class helps setup quick forms using models as the basis
@@ -15,11 +14,13 @@ class modelPassengerRegistration(ModelForm):
             'email' : EmailInput(attrs={'class': 'd-block'}),
             'password' : PasswordInput(render_value = True, attrs={'class': 'd-block'}),
         }
+        # since this is a ModelForm -- these should go in the model ... not here in the form
+        '''
         validators = {
             'first' : validators.MinLengthValidator(2),
-            'last' : validators.MinLengthValidator(2),
-            'password' : RegexValidator('^(?=.{8,}$)(?=.*[A-Z]).*$', 'password is not correct')
+            'last' : validators.MinLengthValidator(2)
         }
+        '''
 
 class passengerRegistration(Form):
     GENDERS = [('male','MALE'),('female','FEMALE'),('imaginary','Imaginary')]
