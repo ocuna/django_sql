@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'mysql_quote',
     'mysql_products',
     'mysql_hr',
+    'mysql_course',
 ]
 
 MIDDLEWARE = [

@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include('mysql_quote.urls')),  
     path('',include('mysql_products.urls')),
     path('',include('mysql_hr.urls')),
+    path('',include('mysql_course.urls')),
 ]
 
