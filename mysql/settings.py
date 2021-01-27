@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'mysql_products',
     'mysql_hr',
     'mysql_course',
+    # contains examples of Class based Views and custom filters
     'mysql_CVB',
+    'mysql_cart',
 ]
 
 MIDDLEWARE = [
