@@ -2,26 +2,29 @@ from django.shortcuts import render
 from mysql_course.models import Courses
 from mysql_course.forms import coursesModelForm
 
-def courseCRUD(request,id='1'):
-    '''
-
-    '''
+def courseCRUD(request,id=None):
     courses = Courses.objects.all()
     course = ''
     mtype = ''
     mtext = ''
     action = ''
     form = ''
+    POST = ''
 
     #is the user requesting the page
     if request.method == 'GET':
         if request.path.find('/delete/') != -1 :
             course = Courses.objects.get(id=id)
-            action = 'create'
             course.delete()
+            action = 'create'
             mtype = 'warning'
-            mtext = 'It\'s your fault.  Course ' + str(course.name) + ' has been irrevocably deleted forever.'
+            mtext = 'You are responsible for  irrevocably deleting the course: ' + str(course.name) + '.'
             form = coursesModelForm
+
+        if request.path.find('/update/') != -1 :
+            course = Courses.objects.get(id=id)
+            action = 'update'
+            form = coursesModelForm(initial=course.__dict__)
 
         else :
             action = 'create'
@@ -29,25 +32,28 @@ def courseCRUD(request,id='1'):
 
     #is the user posting changes?
     elif request.method == 'POST':
+        # POST = request.POST['name']
         if 'update' in request.POST:
             course = Courses.objects.get(id=id)
             form = coursesModelForm(request.POST, instance=course)
             if form.is_valid():
                 form.save()
                 mtype = 'info'
-                mmessage = 'You have successfully updated course: ' + str(course.name) + '.'
+                mtext = 'You have successfully updated course: ' + str(course.name) + '.'
+                action = 'create'
+                form = coursesModelForm
             else:
-                mtype = 'info'
-                mmessage = 'An error in submission occured, please check your information and try again.'
-                # this very cool function fills the form with initial record that's pulled above
-                form = coursesModelForm(initial=course.__dict__)
+                action = 'update'
+                form = coursesModelForm(request.POST, instance=course)
 
         elif 'create' in request.POST:
+            form = coursesModelForm(request.POST)
             if form.is_valid():
                 form.save()
                 mtype = 'success'
-                mmessage = 'Great! The new course: ' + str(course.name) + ' has been created.'
-                form = forms.courses
+                mtext = 'Great! The new course: ' + str(request.POST['name']) + ' has been created.'
+                action = 'create'
+                form = coursesModelForm
 
     message = {'type': mtype, 'text': mtext}
     context = {
@@ -56,5 +62,6 @@ def courseCRUD(request,id='1'):
         'heading': 'Courses: View, Create, Update and Delete',
         'form' : form,
         'action' : action,
+        'POST' : POST,
     }
     return render(request, 'courses.html', context)

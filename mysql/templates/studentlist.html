@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load hr_filters %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
+        </div>
+        {% if students %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill fw-bold">name, email</div>
+                    <div class="flex-shrink-1 fw-bold">grade</div>
+                </div>
+            </div>
+        {% for student in students %}
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-row bg-light px-5">
+                    <div class="flex-fill">{{ student.first | n8iffy }}&nbsp;{{ student.last | n8iffy }} <a href="mailto: {{ student.email }}">{{ student.email }}</a></div>
+                    <div class="flex-shrink-1"><a class="btn btn-secondary btn-sm m-0" href="/cvb/students/details/{{ student.id }}">Details</a></div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="col-12 mb-3">
+            <a a href="/cvb/students/create" class="btn btn-success">Create a New Student</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

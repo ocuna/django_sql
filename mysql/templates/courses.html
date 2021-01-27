@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{{ POST }}
 <div class="container">
     {%  if message.text  %}
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 mt-3">
             <div class="alert alert-{{ message.type }}" role="alert">
                 {{ message.text }}
               </div>
@@ -15,9 +16,35 @@
         <div class="col-12">
             <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
         </div>
+        {% if courses %}
+        <div class="col-6 mb-1">
+            <h2>Available Courses:</h2>   
+
+            {% for course in courses %}
+            <div>
+                <div class="d-flex flex-row px-1">
+                    <div class="flex-fill p-1">
+                        <span class="fw-bold">{{ course.name }}&nbsp;</span><br><i>by: {{ course.instructor }}</i></div>
+                    <div class="flex-shrink-1">
+                        {% with ''|center:course.rating as range %}
+                        {% for _ in range %}
+                            <span class="fw-bold d-inline-block rounded-2 fs-6 py-1 text-warning ">&starf;</span>
+                        {% endfor %}
+                        {% endwith %}                        
+                    </div>
+                    <div class="flex-shrink-1"><a class="btn btn-warning mx-1 p-0 btn-sm" href="/courses/update/{{ course.id }}">update</a></div>
+                    <div class="flex-shrink-1"><a class="btn btn-danger mx-1 p-0 btn-sm" href="/courses/delete/{{ course.id }}">delete</a></div>
+                </div>
+                <div class="mb-2 px-2">
+                    {{ course.description }}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% endif %}
         {% if form %}
-        <div class="col-12">
-            <div class="col-12 mb-3">
+        <div class="col-6">
+            <div class="col-12 mb-3 p-5">
                 <form method="post">
                     {{ form.as_p }}
                     {% csrf_token %}
@@ -26,23 +53,6 @@
             </div>
         </div>
         {% endif %}
-        {% if courses %}
-            {% for course in courses %}
-            <div class="col-12 mb-3">
-                <div class="d-flex flex-row bg-light px-5">
-                    <div class="flex-shrink-1 text-warning fw-bold">
-                        {% for i in course.rating|make_list %}
-                            <span class="d-inline-block m-1 p-1 bg-black rounded-2 fs-6">&starf;&nbsp;</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="flex-fill">{{ course.name }}&nbsp;<i>by: {{ course.instructor }}</i></div>
-                    <div class="flex-shrink-1"><a class="btn btn-warning mx-1 p-0 btn-sm" href="/courses/update/{{ course.id }}">update</a></div>
-                    <div class="flex-shrink-1"><a class="btn btn-danger mx-1  p-0 btn-sm" href="/courses/delete/{{ course.id }}">delete</a></div>
-                </div>
-            </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+     </div>
 </div>
 {% endblock %}

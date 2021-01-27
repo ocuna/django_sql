@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load hr_filters %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-light bg-dark p-4">{{ heading|title }}</h1>
+        </div>
+        <div class="col-12 mb-3">
+            <ul class="bg-light px-5">
+                <li class="d-flex"><div class="flex-shrink-1 col-1">First:</div> <div class="fw-bold">{{ student.first }}</div></li>
+                <li class="d-flex"><div class="flex-shrink-1 col-1">Last:</div> <div class="fw-bold">{{ student.last }}</div></li>
+                <li class="d-flex"><div class="flex-shrink-1 col-1">Email:</div> <div class="fw-bold">{{ student.email }}</div></li>
+                <li class="d-flex"><div class="flex-shrink-1 col-1">Grade:</div> <div class="fw-bold">{{ student.grade |b5bg:"info"|safe }}</div></li>
+            </ul>
+        </div>
+        <div class="col-12 mb-3">
+            <a class="btn btn-info btn-sm m-0" href="/cvb/students/update/{{ student.id }}">Update</a>
+            <a class="btn btn-warning btn-sm m-0" href="/cvb/students/delete/{{ student.id }}">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
