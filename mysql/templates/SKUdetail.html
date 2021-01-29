@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load hr_filters %}
+    <div class="container">
+        <div class="row">
+            <h1 class="col-12">
+                {{ heading }}
+            </h1>
+        </div>
+        {% if SKUs %}
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="d-flex flex-column m-1">
+                    <p>SKU: {{ SKUs.sku }}</p>
+                    <p>MFG: {{ SKUs.mfg }}</p>
+                    <p>PRICE: {{ SKUs.price }}</p>
+                    <p>Name: {{ SKUs.name }}</p>
+                </div>
+                <div>
+                    <p>{{ SKUs.desc }}</p>
+                    <p><a href="/shop/update/{{ SKUs.id }}" class="btn btn-warning btn-sm">edit</a><a href="/shop/delete/{{ SKUs.id }}" class="btn btn-danger btn-sm">delete</a></p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12 mb-3">
+                <a a href="/shop" class="btn btn-success">Shop</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

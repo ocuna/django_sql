@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load hr_filters %}
+    <div class="container">
+        <div class="row">
+            <h1 class="col-12">
+                {{ heading }}
+            </h1>
+        </div>
+        {% if form %}
+        <div class="row mb-5">
+            <form action="" method="post">
+            {% csrf_token %}
+                {{ form.as_p }}
+                <input class="mt-2" type="submit" value="Save">
+            </form>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12 mb-3">
+                <a a href="/shop" class="btn btn-success">View SKUs</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
