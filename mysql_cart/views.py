@@ -49,6 +49,10 @@ class SKUshop(ListView):
         return response
     # 
 
+def Aesspode(request):
+    raise Exception('▐▓▒░ ͶΔͲΞ ░▒▓▌ there has been an intentional exception to demonstrate the capability of the exception-catching middleware.  \n A user went to url: /aesspoded-evrahdang/')
+    return HttpResponse()
+
 def Cart(request):
     cart_items = []
     total = 0

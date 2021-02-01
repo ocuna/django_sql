@@ -1,6 +1,5 @@
 from django.urls import path
-from mysql_cart.views import Cookie, SKUshop, SKUdetail, SKUupdate, SKUcreate, SKUdelete, Cart, EmptyCart
-
+from mysql_cart.views import Cookie, SKUshop, SKUdetail, SKUupdate, SKUcreate, SKUdelete, Cart, EmptyCart, Aesspode
 
 urlpatterns = [
     path('shop', SKUshop.as_view()),
@@ -12,6 +11,7 @@ urlpatterns = [
     path('shop/cart/', Cart ),
     path('shop/cart/empty', EmptyCart ),
     path('cookie/', Cookie, ),
+    path('aesspoded-evrahdang/', Aesspode),
     path('cookie/<slug:arg>', Cookie),
 ]
 

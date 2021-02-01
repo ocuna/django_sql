@@ -3,14 +3,21 @@ from django.views.generic import View, ListView, DetailView, CreateView, UpdateV
 from django.http import HttpResponse
 from mysql_CVB.models import Students
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from mysql.decorators import group_required
 
 # Create your views here.
 class GreetingView(View):
-    greetingMessage = 'IT\'s CVB Time!'
+    # we must declare this attribute if the django can pass it in from urls.py
+    greetingMessage = ''
+    temp = '<h1>IT\'s CVB Time!</h1><p><a href="/accounts/login?next=/cbv/students/">Login</a> if you got it...'
     def get(self,request):
-        self.greetingMessage = '<div class="p-2 bg-warning text-white fw-bold">' + self.greetingMessage + '</div>'
-        return HttpResponse(self.greetingMessage)
+        self.greetingMessage = '<div>' + self.greetingMessage + '</div>'
+        return HttpResponse(str(self.temp) + self.greetingMessage)
 
+# decorator is going to modify each view through "decorating wrapping"
+@method_decorator(login_required, name="dispatch")
 class StudentsListView(ListView):
     model = Students
     #default template_name = model_list.html - in our case: "student_list.html"
@@ -25,6 +32,7 @@ class StudentsListView(ListView):
         context['heading'] = 'Student List'
         return context
 
+@method_decorator(login_required, name="dispatch")
 class StudentsDetailView(DetailView):
     model = Students
     #default template_name = model_list.html - in our case: "student_detail.html"
@@ -40,6 +48,7 @@ class StudentsDetailView(DetailView):
         context['heading'] = 'Student Details'
         return context
 
+@method_decorator(login_required, name="dispatch")
 class StudentsCreateView(CreateView):
     model = Students
     fields = ('first','last','email','grade')
@@ -55,6 +64,7 @@ class StudentsCreateView(CreateView):
         context['heading'] = 'Create Student'
         return context
 
+@method_decorator(login_required, name="dispatch")
 class StudentsUpdateView(UpdateView):
     model = Students
     fields = ('email','grade')
@@ -70,6 +80,11 @@ class StudentsUpdateView(UpdateView):
         context['heading'] = 'Update Student'
         return context
 
+# https://stackoverflow.com/questions/36177769/django-groups-and-permissions
+# https://stackoverflow.com/questions/29673549/method-decorator-with-login-required-and-permission-required
+# the user must be POWERUSER to access this CBV
+decorators = [login_required,group_required(u"poweruser")] 
+@method_decorator(decorators, name="dispatch")
 class StudentsDeleteView(DeleteView):
     model = Students
     success_url = reverse_lazy('studentList')

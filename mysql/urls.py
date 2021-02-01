@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mysql.views import nope_403
 
 # need to get the ability to import sub-application urls
 from django.conf.urls import include
@@ -28,5 +29,8 @@ urlpatterns = [
     path('',include('mysql_course.urls')),
     path('',include('mysql_CVB.urls')),
     path('',include('mysql_cart.urls')),
+    # Primarilly used by the mysql_CBV package
+    path('accounts/',include('django.contrib.auth.urls')),
+    path('accounts/403', nope_403)
 ]
 

@@ -18,13 +18,13 @@
             <div class="col-12 mb-3">
                 <div class="d-flex flex-row bg-light px-5">
                     <div class="flex-fill">{{ student.first | n8iffy }}&nbsp;{{ student.last | n8iffy }} <a href="mailto: {{ student.email }}">{{ student.email }}</a></div>
-                    <div class="flex-shrink-1"><a class="btn btn-secondary btn-sm m-0" href="/cvb/students/details/{{ student.id }}">Details</a></div>
+                    <div class="flex-shrink-1"><a class="btn btn-secondary btn-sm m-0" href="/cbv/students/details/{{ student.id }}">Details</a></div>
                 </div>
             </div>
             {% endfor %}
         {% endif %}
         <div class="col-12 mb-3">
-            <a a href="/cvb/students/create" class="btn btn-success">Create a New Student</a>
+            <a a href="/cbv/students/create" class="btn btn-success">Create a New Student</a>
         </div>
     </div>
 </div>

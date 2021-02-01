@@ -63,6 +63,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # this registers the middleware
+    'mysql_cart.middleware.PrintMiddleWareLifeCyle',
+    'mysql_cart.middleware.PrintMiddleWareExceptionHandle'
 ]
 
 ROOT_URLCONF = 'mysql.urls'
@@ -70,7 +73,7 @@ ROOT_URLCONF = 'mysql.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'mysql/templates'],
+        'DIRS': [BASE_DIR / 'mysql/templates',BASE_DIR / 'mysql/templates/registration' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -150,3 +152,9 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# login/logout mods
+LOGOUT_REDIRECT_URL = '/cbv/stundents/logout'
+
+# I uh ... disabled them because -- it's annoying in production
+AUTH_PASSWORD_VALIDATORS = []
