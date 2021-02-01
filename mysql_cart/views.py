@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template.response import TemplateResponse
+from django.template import loader
 from django.views.generic import View,ListView,DetailView,CreateView,UpdateView,DeleteView
 from mysql_cart.models import SKUs
+from mysql_cart.easy import process_list
+import json
 
 
 class SKUshop(ListView):
@@ -9,28 +13,96 @@ class SKUshop(ListView):
     #pushing a button here should add products to the cart & throw a notification
     template_name = 'shop.html'
     context_object_name = 'SKUs'
-
-    def get(self, request, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return self.render_to_response(context)
-
-    def get_queryset(self):
-        return super().get_queryset()
+    # initial = {'key': 'value'}
 
     def get_context_data(self,**kwargs):
+        # in get context from 'self' we can retrieve the request data
+        # context['temp'] = self.request.GET
         context = super().get_context_data(**kwargs)
-        context['heading'] = 'Shop SKUs'
         return context
+
+    # from https://docs.djangoproject.com/en/3.1/topics/class-based-views/intro/#handling-forms-with-class-based-views
+    def get(self, request, *args, **kwargs):
+        template = loader.get_template(self.template_name)
+        response = HttpResponse()
+        cart_list = []
+        cart_json = ''
+
+        if 'cart' in request.COOKIES.keys():
+            cart_json = request.COOKIES['cart']
+            cart_list = json.loads(cart_json)
+       
+        if 'pk' in kwargs:
+            cart_list.append(kwargs['pk'])
+            #CookieProcessor(HttpResponse,'billy','goat').add
+            cart_json = json.dumps(cart_list)
+            response.set_cookie('cart',cart_json)
+
+        context = {
+            'heading' : 'Shop SKUs',
+            'SKUs' : self.model.objects.all(),
+            'DEBUG' : request.COOKIES,
+            'CART' : cart_list,
+            'JSON' : cart_json
+        }
+        response.write(template.render(context))
+        return response
+    # 
+
+def Cart(request):
+    cart_items = []
+    total = 0
+    if 'cart' in request.COOKIES.keys():
+        cart_html = '<p>You Bought This Stuff: </p>'
+        process = process_list(json.loads(request.COOKIES['cart']))
+        uniques = process.uniques()
+        count_uniques = process.count_uniques()
+ 
+        for uid in uniques:
+            thissku = SKUs.objects.only('id','name','sku','price').get(pk=uid)
+            thisqty = count_uniques[uid]
+            total = total + (int(thisqty) * int(thissku.price))
+            cart_items.append({'sku':thissku.id, 'name': thissku.name, 'price':thissku.price, 'qty':thisqty}) 
+    
+    else:
+        cart_html = '<p><a href="/shop">Go shop for stuff</a>, your cart is empty..</p>'
+
+    context = {
+        'heading' : "Shopping Cart",
+        'cart_html' : cart_html,
+        'cart_items':cart_items,
+        'total':total
+    }
+    return render(request,'cart.html', context)
+
+def EmptyCart(request):
+    response = HttpResponseRedirect('/shop/cart/')
+    response.delete_cookie('cart')
+    return response
+
 
 class SKUdetail(DetailView):
     model = SKUs
     context_object_name = 'SKUs'
     # assert False, model
     template_name = 'SKUdetail.html'
+
     def get_context_data(self, **kwargs):
+        # set the count for this SKU with the session
+        sessionname = 'SKU_' + str(self.kwargs['pk']) + '_count'
+        #use the session name to get the prior number of visits
+        count = self.request.session.get(sessionname, 0)
+        # increment that visit count
+        count = count + 1
+        # set the session variable with the new modified count of +1
+        self.request.session[sessionname] = count
+
         context = super().get_context_data(**kwargs)
         context['heading'] = 'SKUs Details'
+        context['count'] = count
+        context['session'] = self.request.session
         return context
+
 
 class SKUupdate(UpdateView):
     model = SKUs
@@ -61,13 +133,6 @@ class SKUdelete(DeleteView):
         # Add in a QuerySet of all the view
         context['heading'] = 'Delete SKU'
         return context
-
-def Cart(request):
-    context = {
-        'title' : "Shopping Cart"
-    }
-    return render(request,'cart.html', context)
-
 
 
 

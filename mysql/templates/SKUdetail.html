@@ -26,6 +26,8 @@
         {% endif %}
         <div class="row">
             <div class="col-12 mb-3">
+                <p>Just saying, you've looked at this time recently: {{  count  }} many times.  Are you gonna buy it yet?</p>
+                <p>Current session expires: {{  session.get_expiry_date  }}</p>
                 <a a href="/shop" class="btn btn-success">Shop</a>
             </div>
         </div>

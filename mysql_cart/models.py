@@ -13,3 +13,10 @@ class SKUs(models.Model):
         # here the user will go back to the url "named" studentdetail and carry with it the argument of the current created private key or ID
         # that way after creation the user can see their own created stuff.
         return reverse('SKUdetail', kwargs={'pk':self.pk})
+
+
+    class Meta:
+        unique_together = [['sku', 'mfg']]
+
+    def natural_key(self):
+        return (self.sku, self.mfg)

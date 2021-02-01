@@ -8,6 +8,7 @@
                 {{ heading }}
             </h1>
         </div>
+        <pre>{# DEBUG #}</pre>
         {% if SKUs %}
         <div class="row">
             {% for SKU in SKUs %}
@@ -17,7 +18,7 @@
                     <div class="fw-bold">{{ SKU.name }}</div>
                     <div>{{ SKU.sku }} - by: {{ SKU.mfg }}</div>
                     <div class="my-3">{{ SKU.desc }}</div>
-                    <div><a href="" class="btn btn-primary">Buy Now: $ {{ SKU.price }}</a></div>
+                    <div><a href="/shop/add/{{ SKU.id }}" class="btn btn-primary">Buy Now: $ {{ SKU.price }}</a></div>
                 </div>
             </div>
             {% endfor %}

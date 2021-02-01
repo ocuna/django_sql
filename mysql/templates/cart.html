@@ -7,8 +7,26 @@
             <h1 class="col-12">
                 {{ heading }}
             </h1>
+            {% if cart_html %}
+                <p>{{  cart_html|safe  }}</p>
+            {% endif %}
             <div class="col-12">
-                process items in session here.
+                {% for item in cart_items %}
+                    <div class="d-flex">
+                        <div class="flex-grow-1"><a href="/shop/detail/{{ item.sku }}">{{ item.name }}</a></div>
+                        <div class="flex-shrink-1 col-1 text-end">{{ item.qty }} &times; </div>
+                        <div class="flex-shrink-1 col-1 text-end">$ {{ item.price }}</div>
+                    </div>
+                {% endfor %}
+                    <div class="d-flex my-4 border border-top-2 border-bottom-0 border-start-0 border-end-0 border-dark fw-bold">
+                        <div class="flex-grow-1">total: </div>
+                        <div class="flex-shrink-1 col-1 text-end">$ {{ total }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-end">
+                <a class="btn btn-warning" href="/shop/cart/empty">Empty Cart</a>
+                <a class="btn btn-success disabled strike" href="#"><s>Purchase</s></a>
             </div>
         </div>
     </div>
