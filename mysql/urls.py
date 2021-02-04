@@ -29,6 +29,7 @@ urlpatterns = [
     path('',include('mysql_course.urls')),
     path('',include('mysql_CVB.urls')),
     path('',include('mysql_cart.urls')),
+    path('',include('mysql_clinic.urls')),
     # Primarilly used by the mysql_CBV package
     path('accounts/',include('django.contrib.auth.urls')),
     path('accounts/403', nope_403)

@@ -8,11 +8,14 @@ class Employee(models.Model):
     lastName=models.CharField(max_length=30)
     salary=models.FloatField()
     email=models.CharField(max_length=254)
-
     #anotehr way to display this a certain way in admin...
     #def __str__(self):
     #    return self.email
 
+class Project(models.Model):
+    projectName = models.CharField(max_length=50)
+    #many to many reference field
+    programmers=models.ManyToManyField(Employee)
 
 class Passenger(models.Model):
     first=models.CharField(max_length=30, default='', validators=[validators.MinLengthValidator(2, 'must be 2 characters or more.')])
@@ -25,3 +28,16 @@ class Passenger(models.Model):
 
     def __str__(self):
         return str(self.id) + " | " + str(self.first) + " " + str(self.last) + " ---> " + str(self.points)
+
+class ContactPhone(models.Model):
+    type=models.CharField(max_length=10)
+    number=models.CharField(max_length=10)
+    # on deletions of an employee - the contactPhone should also be deleted.
+    # ManytoOne relationship via ForeignKey
+    owner=models.ForeignKey(Employee,on_delete=models.CASCADE, null=False)
+
+class Identification(models.Model):
+    type=models.CharField(max_length=10)
+    number=models.CharField(max_length=10)
+    # on deletions of an employee - the contactPhone should also be deleted.
+    employee=models.OneToOneField(Employee,on_delete=models.CASCADE)
